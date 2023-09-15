@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type WeatherCastComponentProps = {
   city: string;
@@ -11,7 +11,29 @@ type CitySpecificationsResponse = {
   lon: number;
 };
 
-type WeatherDataResponse = {
+type CurrentWeatherDataResponse = {
+  main: {
+    temp: number;
+    feels_like: number;
+    humidity: number;
+  };
+  weather: [
+    {
+      main: string;
+      description: string;
+    }
+  ];
+  wind: {
+    speed: number;
+    deg: number;
+  };
+};
+
+type FiveDayWeatherDataResponse = {
+  city: {
+    sunrise: number;
+    sunset: number;
+  };
   list: [
     {
       dt_txt: string;
@@ -24,9 +46,9 @@ type WeatherDataResponse = {
         {
           main: string;
           description: string;
-          icon: string;
         }
       ];
+      pop: number;
       wind: {
         speed: number;
         deg: number;
@@ -39,7 +61,10 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
   const { city } = props;
   const [selectedCitySpecifications, setSelectedCitySpecifications] =
     useState<CitySpecificationsResponse>();
-  const [weatherData, setWeatherData] = useState<WeatherDataResponse>();
+  const [currentWeatherData, setCurrentWeatherData] =
+    useState<CurrentWeatherDataResponse>();
+  const [fiveDayWeatherData, setFiveDayWeatherData] =
+    useState<FiveDayWeatherDataResponse>();
 
   useEffect(() => {
     fetch(
@@ -62,6 +87,22 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     }
 
     fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${
+        selectedCitySpecifications.lat
+      }&lon=${selectedCitySpecifications.lon}&appid=${
+        import.meta.env.VITE_OPEN_WEATHER_API_KEY
+      }`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setCurrentWeatherData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching current weather data:", error);
+      });
+
+    fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${
         selectedCitySpecifications.lat
       }&lon=${selectedCitySpecifications.lon}&appid=${
@@ -71,17 +112,18 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setWeatherData(data);
+        setFiveDayWeatherData(data);
       })
       .catch((error) => {
-        console.error("Error fetching weather data:", error);
+        console.error("Error fetching five day weather data:", error);
       });
   }, [selectedCitySpecifications]);
 
   return (
-    <div style={{color: "green"}}>
+    <div style={{ color: "white" }}>
       {selectedCitySpecifications ? (
         <>
+          <h1>CIDADE:</h1>
           <p>
             {selectedCitySpecifications.name}{" "}
             {selectedCitySpecifications.country}
@@ -93,18 +135,42 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       ) : (
         <div>Loading city data...</div>
       )}
-      {weatherData && weatherData.list ? (
-        weatherData.list.map((weatherData) => (
-          <p key={weatherData.dt_txt}>
-            {weatherData.dt_txt}{" "}
-            {weatherData.main.temp}{" "}
-            {weatherData.main.feels_like}{" "}
-            {weatherData.main.humidity}{" "}
+      <>
+        <h1>PREVISÃO ATUAL:</h1>
+        {currentWeatherData ? (
+          <p>
+            temp: {currentWeatherData.main.temp} | felt temp:{" "}
+            {currentWeatherData.main.feels_like} | humidity:{" "}
+            {currentWeatherData.main.humidity} | weather:{" "}
+            {currentWeatherData.weather[0].main} | weather desc:{" "}
+            {currentWeatherData.weather[0].description} | wind speed:{" "}
+            {currentWeatherData.wind.speed} | wind deg:{" "}
+            {currentWeatherData.wind.deg} |
           </p>
-        ))
-      ) : (
-        <div>Loading weather data...</div>
-      )}
+        ) : (
+          <div>Loading weather data...</div>
+        )}
+      </>
+      <>
+        <h1>PREVISÃO 5 DIAS:</h1>
+        {fiveDayWeatherData && fiveDayWeatherData.list ? (
+          fiveDayWeatherData.list.map((fiveDayWeatherData) => (
+            <p key={fiveDayWeatherData.dt_txt}>
+              date: {fiveDayWeatherData.dt_txt} | temp:{" "}
+              {fiveDayWeatherData.main.temp} | felt temp:{" "}
+              {fiveDayWeatherData.main.feels_like} | humidity:{" "}
+              {fiveDayWeatherData.main.humidity} | weather:{" "}
+              {fiveDayWeatherData.weather[0].main} | weather desc:{" "}
+              {fiveDayWeatherData.weather[0].description} | rain prob:{" "}
+              {fiveDayWeatherData.pop} | wind speed:{" "}
+              {fiveDayWeatherData.wind.speed} | wind deg:{" "}
+              {fiveDayWeatherData.wind.deg} |
+            </p>
+          ))
+        ) : (
+          <div>Loading weather data...</div>
+        )}
+      </>
     </div>
   );
 }
