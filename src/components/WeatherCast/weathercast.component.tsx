@@ -66,6 +66,32 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
   const [fiveDayWeatherData, setFiveDayWeatherData] =
     useState<FiveDayWeatherDataResponse>();
 
+/*   const [userLocation, setUserLocation] = useState<{
+    lat: number;
+    lon: number;
+  }>();
+
+  useEffect(() => {
+    const fetchUserLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log(position);
+            const { latitude, longitude } = position.coords;
+            setUserLocation({ lat: latitude, lon: longitude });
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    };
+
+    fetchUserLocation();
+  }); */
+
   useEffect(() => {
     fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${
@@ -85,6 +111,9 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     if (!selectedCitySpecifications) {
       return;
     }
+    /*     if (!latitude ||!longitude) {
+      return;
+    } */
 
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${
@@ -95,8 +124,8 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setCurrentWeatherData(data);
+        /*         console.log(data);
+         */ setCurrentWeatherData(data);
       })
       .catch((error) => {
         console.error("Error fetching current weather data:", error);
@@ -136,39 +165,39 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
         <div>Loading city data...</div>
       )}
       <>
-        <h1>PREVISÃO ATUAL:</h1>
         {currentWeatherData ? (
-          <p>
-            temp: {currentWeatherData.main.temp} | felt temp:{" "}
-            {currentWeatherData.main.feels_like} | humidity:{" "}
-            {currentWeatherData.main.humidity} | weather:{" "}
-            {currentWeatherData.weather[0].main} | weather desc:{" "}
-            {currentWeatherData.weather[0].description} | wind speed:{" "}
-            {currentWeatherData.wind.speed} | wind deg:{" "}
-            {currentWeatherData.wind.deg} |
-          </p>
+          <>
+            <h1>PREVISÃO ATUAL:</h1>
+            <p>
+              temp: {currentWeatherData.main.temp} | felt temp:{" "}
+              {currentWeatherData.main.feels_like} | humidity:{" "}
+              {currentWeatherData.main.humidity} | weather:{" "}
+              {currentWeatherData.weather[0].main} | weather desc:{" "}
+              {currentWeatherData.weather[0].description} | wind speed:{" "}
+              {currentWeatherData.wind.speed} | wind deg:{" "}
+              {currentWeatherData.wind.deg} |
+            </p>
+          </>
         ) : (
-          <div>Loading weather data...</div>
+          <div>Loading current weather data...</div>
         )}
       </>
       <>
-        <h1>PREVISÃO 5 DIAS:</h1>
         {fiveDayWeatherData && fiveDayWeatherData.list ? (
-          fiveDayWeatherData.list.map((fiveDayWeatherData) => (
-            <p key={fiveDayWeatherData.dt_txt}>
-              date: {fiveDayWeatherData.dt_txt} | temp:{" "}
-              {fiveDayWeatherData.main.temp} | felt temp:{" "}
-              {fiveDayWeatherData.main.feels_like} | humidity:{" "}
-              {fiveDayWeatherData.main.humidity} | weather:{" "}
-              {fiveDayWeatherData.weather[0].main} | weather desc:{" "}
-              {fiveDayWeatherData.weather[0].description} | rain prob:{" "}
-              {fiveDayWeatherData.pop} | wind speed:{" "}
-              {fiveDayWeatherData.wind.speed} | wind deg:{" "}
-              {fiveDayWeatherData.wind.deg} |
-            </p>
-          ))
+          <>
+            <h1>PREVISÃO 5 DIAS:</h1>
+            {fiveDayWeatherData.list.map((item) => (
+              <p key={item.dt_txt}>
+                date: {item.dt_txt} | temp: {item.main.temp} | felt temp:{" "}
+                {item.main.feels_like} | humidity: {item.main.humidity} |
+                weather: {item.weather[0].main} | weather desc:{" "}
+                {item.weather[0].description} | rain prob: {item.pop} | wind
+                speed: {item.wind.speed} | wind deg: {item.wind.deg} |
+              </p>
+            ))}
+          </>
         ) : (
-          <div>Loading weather data...</div>
+          <div>Loading five day weather data...</div>
         )}
       </>
     </div>
