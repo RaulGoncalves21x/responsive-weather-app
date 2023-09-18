@@ -1,26 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LocationMainContainer,
   LocationInputContainer,
   LocationInputField,
 } from "./searchlocation.style.tsx";
 import LocationDropdownComponent from "./LocationDropdown/locationdropdown.component.tsx";
+import { LocationType } from "../Home/homepage.component.tsx";
 
 type SearchLocationComponentProps = {
-  setLocation: (location: string) => void;
+  setLocationCoords: (location: LocationType) => void;
 };
 
 function SearchLocationComponent(props: SearchLocationComponentProps) {
-  const { setLocation } = props;
-  const [isInputFocused, setIsInputFocused] = useState(false);
+  const { setLocationCoords } = props;
 
-  const handleFocus = () => {
-    setIsInputFocused(true);
+  const [shouldRender, setShouldRender] = useState(false);
+  const toggleDropdownRender = () => {
+    setShouldRender(!shouldRender);
   };
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleBlur = () => {
-    setIsInputFocused(false);
-  };
+  useEffect(() => {
+    if (shouldRender) {
+      // Delay applying the 'visible' class to allow for the transition effect to be seen
+      setTimeout(() => {
+        setShowDropdown(true);
+      }, 100);
+    } else {
+      setShowDropdown(false);
+    }
+  }, [shouldRender]);
 
   return (
     <>
@@ -29,11 +38,10 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
           <i className="bi bi-search"></i>
           <LocationInputField
             placeholder="Search..."
-            onChange={(event) => setLocation(event.target.value)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            onFocus={toggleDropdownRender}
+            onBlur={toggleDropdownRender}
           />
-          <LocationDropdownComponent active={isInputFocused}/>
+          {shouldRender && <LocationDropdownComponent active={showDropdown} />}
         </LocationInputContainer>
       </LocationMainContainer>
     </>
