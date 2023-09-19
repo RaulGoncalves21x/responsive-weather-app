@@ -67,6 +67,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     useState<FiveDayWeatherDataResponse>();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (!cityCoords) {
@@ -90,6 +91,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       })
       .catch((error) => {
         console.error("Error fetching city data:", error);
+        setIsError(true);
       });
 
     // Fetch current weather data
@@ -107,6 +109,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       })
       .catch((error) => {
         console.error("Error fetching current weather data:", error);
+        setIsError(true);
       });
 
     // Fetch five day weather data
@@ -124,6 +127,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       })
       .catch((error) => {
         console.error("Error fetching five day weather data:", error);
+        setIsError(true);
       })
       .finally(() => {
         setIsLoading(false); // Set loading to false when all fetching is done
@@ -132,7 +136,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
 
   return (
     <>
-      {cityCoords && (
+      {cityCoords && !isError && (
         <div style={{ color: "white" }}>
           {selectedCitySpecifications && cityCoords ? (
             <>
@@ -145,7 +149,9 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
                 {cityCoords.lat} {cityCoords.lon}
               </p>
             </>
-          ) : null}
+          ) : (
+            <p>error</p>
+          )}
           <>
             {currentWeatherData ? (
               <>
@@ -160,7 +166,9 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
                   {currentWeatherData.wind.deg} |
                 </p>
               </>
-            ) : null}
+            ) : (
+              <p>error</p>
+            )}
           </>
           <>
             {fiveDayWeatherData && fiveDayWeatherData.list ? (
@@ -176,8 +184,16 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
                   </p>
                 ))}
               </>
-            ) : null}
+            ) : (
+              <p>error</p>
+            )}
           </>
+        </div>
+      )}
+      {isError && (
+        <div style={{ color: "white" }}>
+          <h1>ERRO!</h1>
+          <p>Não foi possível carregar os dados.</p>
         </div>
       )}
       <LoadingBackdrop loading={isLoading} />

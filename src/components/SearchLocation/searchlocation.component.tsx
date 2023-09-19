@@ -6,6 +6,7 @@ import {
 } from "./searchlocation.style.tsx";
 import LocationDropdownComponent from "./LocationDropdown/locationdropdown.component.tsx";
 import { LocationType } from "../Home/homepage.component.tsx";
+import LoadingBackdrop from "../Common/loadingbackdrop.component.tsx";
 
 type SearchLocationComponentProps = {
   setLocationCoords: (coords: LocationType) => void;
@@ -14,6 +15,7 @@ type SearchLocationComponentProps = {
 function SearchLocationComponent(props: SearchLocationComponentProps) {
   const { setLocationCoords } = props;
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [shouldRender, setShouldRender] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,14 +32,15 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
     }
   }, [shouldRender]);
 
-  /*   useEffect(() => {
+  useEffect(() => {
     if (!showDropdown && shouldRender) {
-      // Delay remotion of 'LocationDropdownComponent' to allow for the transition effect to be seen
+      // Delay unmounting of 'LocationDropdownComponent' by a short duration
+      // to allow for the transition effect to be seen and so the selection of a dropdown location is possible
       setTimeout(() => {
         toggleDropdownRender();
       }, 150);
     }
-  }, [showDropdown]); */
+  }, [showDropdown]);
 
   return (
     <>
@@ -50,18 +53,19 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
             onChange={(e) => setSearchValue(e.target.value)}
             onFocus={toggleDropdownRender}
             onBlur={() => {
-              toggleDropdownRender();
               setShowDropdown(false);
             }}
           />
-          <LocationDropdownComponent
-            active={showDropdown}
-            setLocationCoords={setLocationCoords}
-          />
-          {/* {shouldRender && (
-          )} */}
+          {shouldRender && (
+            <LocationDropdownComponent
+              active={showDropdown}
+              setLocationCoords={setLocationCoords}
+              fetchingSpecifiedCoordsStatus={setIsLoading}
+            />
+          )}
         </LocationInputContainer>
       </LocationMainContainer>
+      <LoadingBackdrop loading={isLoading} />
     </>
   );
 }

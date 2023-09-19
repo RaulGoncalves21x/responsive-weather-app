@@ -6,8 +6,7 @@ type LocationDropdownProps = {
 
 export const LocationDropdown = styled.div<LocationDropdownProps>`
   width: 100%;
-  /*   opacity: ${(props: LocationDropdownProps) => (props.active ? "1" : "0")};
- */
+  opacity: ${(props: LocationDropdownProps) => (props.active ? "1" : "0")};
   box-shadow: 0 4px 10px rgb(10, 10, 10, 0.7);
   font-size: 16px;
   border-radius: 0 0 20px 20px;

@@ -9,16 +9,16 @@ import {
 
 type LocationDropdownComponentProps = {
   active?: boolean;
+  fetchingSpecifiedCoordsStatus: (status: boolean) => void;
   setLocationCoords: (coords: LocationType) => void;
 };
 
 function LocationDropdownComponent(props: LocationDropdownComponentProps) {
-  const { active, setLocationCoords } = props;
-  const [isLoading, setIsLoading] = useState(false);
+  const { active, setLocationCoords, fetchingSpecifiedCoordsStatus } = props;
 
   const fetchUserLocation = () => {
     console.log("Clicked on Use Current Location"); // Add this line
-    setIsLoading(true);
+    fetchingSpecifiedCoordsStatus(true);
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -26,7 +26,7 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
           console.log(position);
           const { latitude, longitude } = position.coords;
           setLocationCoords({ lat: latitude, lon: longitude });
-          setIsLoading(false);
+          fetchingSpecifiedCoordsStatus(false);
         },
         (error) => {
           console.error(error);
@@ -38,11 +38,23 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
   };
 
   return (
-    <LocationDropdown /*  active={active} */>
+    <LocationDropdown active={active}>
       <CurrentLocationDropdownOption onClick={fetchUserLocation}>
         Use Current Location
       </CurrentLocationDropdownOption>
-      <LoadingBackdrop loading={isLoading} />
+      {Array.from(Array(5)).map((_, index) => (
+        <BaseDropdownOption
+          key={index}
+          onClick={() =>
+            setLocationCoords({
+              lat: Math.floor(Math.random() * 100),
+              lon: Math.floor(Math.random() * 100),
+            })
+          }
+        >
+          Random Location
+        </BaseDropdownOption>
+      ))}
     </LocationDropdown>
   );
 }
