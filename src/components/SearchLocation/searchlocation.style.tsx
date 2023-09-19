@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LocationMainContainer = styled.form`
+export const LocationMainContainer = styled.div`
   width: 100vw;
   height: 30vh;
   display: flex;
@@ -29,13 +29,13 @@ export const LocationInputField = styled.input`
   border-radius: 20px;
   outline: none;
   border: none;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 10px rgb(10, 10, 10, 0.7);
   padding: 0 50px;
 
   transition: all 0.2s ease-in-out;
 
   &:focus {
     border-radius: 20px 20px 0 0;
-    box-shadow: none;
+    box-shadow: 0 -4px 10px rgb(0, 0, 0, 0.4);
   }
 `;

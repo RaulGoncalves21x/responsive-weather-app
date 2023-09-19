@@ -73,6 +73,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
       return;
     }
     setIsLoading(true);
+    console.log(cityCoords);
 
     // Fetch city specifications
     fetch(
@@ -84,6 +85,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     )
       .then((response) => response.json())
       .then((data) => {
+        /* console.log(data); */
         setSelectedCitySpecifications(data[0]);
       })
       .catch((error) => {
@@ -117,7 +119,7 @@ function WeatherCastComponent(props: WeatherCastComponentProps) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        /* console.log(data); */
         setFiveDayWeatherData(data);
       })
       .catch((error) => {

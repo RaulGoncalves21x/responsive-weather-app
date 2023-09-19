@@ -8,28 +8,36 @@ import LocationDropdownComponent from "./LocationDropdown/locationdropdown.compo
 import { LocationType } from "../Home/homepage.component.tsx";
 
 type SearchLocationComponentProps = {
-  setLocationCoords: (location: LocationType) => void;
+  setLocationCoords: (coords: LocationType) => void;
 };
 
 function SearchLocationComponent(props: SearchLocationComponentProps) {
   const { setLocationCoords } = props;
+  const [searchValue, setSearchValue] = useState("");
 
   const [shouldRender, setShouldRender] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdownRender = () => {
     setShouldRender(!shouldRender);
   };
-  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     if (shouldRender) {
-      // Delay applying the 'visible' class to allow for the transition effect to be seen
+      // Delay setting 'showDropdown' to true to allow for the transition effect to be seen
       setTimeout(() => {
         setShowDropdown(true);
       }, 100);
-    } else {
-      setShowDropdown(false);
     }
   }, [shouldRender]);
+
+  /*   useEffect(() => {
+    if (!showDropdown && shouldRender) {
+      // Delay remotion of 'LocationDropdownComponent' to allow for the transition effect to be seen
+      setTimeout(() => {
+        toggleDropdownRender();
+      }, 150);
+    }
+  }, [showDropdown]); */
 
   return (
     <>
@@ -38,10 +46,20 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
           <i className="bi bi-search"></i>
           <LocationInputField
             placeholder="Search..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             onFocus={toggleDropdownRender}
-            onBlur={toggleDropdownRender}
+            onBlur={() => {
+              toggleDropdownRender();
+              setShowDropdown(false);
+            }}
           />
-          {shouldRender && <LocationDropdownComponent active={showDropdown} />}
+          <LocationDropdownComponent
+            active={showDropdown}
+            setLocationCoords={setLocationCoords}
+          />
+          {/* {shouldRender && (
+          )} */}
         </LocationInputContainer>
       </LocationMainContainer>
     </>
