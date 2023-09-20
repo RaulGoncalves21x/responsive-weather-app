@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { LocationType } from "../Home/homepage.component";
-import LoadingBackdrop from "../Common/loadingbackdrop.component";
+import { LocationType } from "../home/home.component";
+import LoadingBackdrop from "../common/loading-backdrop.component";
 
 type CitySpecificationsResponse = {
   name: string;

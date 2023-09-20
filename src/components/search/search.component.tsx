@@ -3,10 +3,10 @@ import {
   LocationMainContainer,
   LocationInputContainer,
   LocationInputField,
-} from "./searchlocation.style.tsx";
-import LocationDropdownComponent from "./LocationDropdown/locationdropdown.component.tsx";
-import { LocationType } from "../Home/homepage.component.tsx";
-import LoadingBackdrop from "../Common/loadingbackdrop.component.tsx";
+} from "./search.style.tsx";
+import LocationDropdownComponent from "./location-dropdown/location-dropdown.component.tsx";
+import { LocationType } from "../home/home.component.tsx";
+import LoadingBackdrop from "../common/loading-backdrop.component.tsx";
 
 type SearchLocationComponentProps = {
   setLocationCoords: (coords: LocationType) => void;

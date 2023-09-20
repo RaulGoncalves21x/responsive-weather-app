@@ -1,13 +1,13 @@
 import { useState } from "react";
-import WeatherCastComponent from "../WeatherCast/weathercast.component";
-import SearchLocationComponent from "../SearchLocation/searchlocation.component";
+import WeatherCastComponent from "../forecast/forecast.component";
+import SearchLocationComponent from "../search//search.component";
 
 export type LocationType = {
   lat: number;
   lon: number;
 };
 
-function HomePageComponent() {
+function HomeComponent() {
   const [searchInputValue, setSearchInputValue] = useState<LocationType>({
     lat: 34.05223,
     lon: -118.24368,
@@ -21,4 +21,4 @@ function HomePageComponent() {
   );
 }
 
-export default HomePageComponent;
+export default HomeComponent;

@@ -1,11 +1,9 @@
-import { useState } from "react";
-import LoadingBackdrop from "../../Common/loadingbackdrop.component";
-import { LocationType } from "../../Home/homepage.component";
+import { LocationType } from "../../home/home.component";
 import {
   CurrentLocationDropdownOption,
   BaseDropdownOption,
   LocationDropdown,
-} from "./locationdropdown.style";
+} from "./location-dropdown.style";
 
 type LocationDropdownComponentProps = {
   active?: boolean;
@@ -40,7 +38,7 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
   return (
     <LocationDropdown active={active}>
       <CurrentLocationDropdownOption onClick={fetchUserLocation}>
-        Use Current Location
+        <i className="bi bi-geo-fill"></i>Use Current Location
       </CurrentLocationDropdownOption>
       {Array.from(Array(5)).map((_, index) => (
         <BaseDropdownOption
