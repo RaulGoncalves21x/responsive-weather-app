@@ -13,7 +13,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-blend-mode: saturation;
+  background-position: center bottom;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

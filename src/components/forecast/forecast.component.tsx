@@ -1,204 +1,46 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LocationType } from "../home/home.component";
 import LoadingBackdrop from "../common/loading-backdrop.component";
+import LocationComponent from "./location/location.component";
+import CurrentWeatherComponent from "./current-forecast/current-forecast.component";
+import FiveDayForecastComponent from "./five-day-forecast/five-day-forecast.component";
+import { WeatherForecastMainContainer } from "./forecast.style";
+import ErrorComponent from "./error/error.component";
 
-type CitySpecificationsResponse = {
-  name: string;
-  country: string;
+type WeatherForecastComponentProps = {
+  locationCoords?: LocationType;
 };
 
-type CurrentWeatherDataResponse = {
-  main: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-  };
-  weather: [
-    {
-      main: string;
-      description: string;
-    }
-  ];
-  wind: {
-    speed: number;
-    deg: number;
-  };
-};
-
-type FiveDayWeatherDataResponse = {
-  city: {
-    sunrise: number;
-    sunset: number;
-  };
-  list: [
-    {
-      dt_txt: string;
-      main: {
-        temp: number;
-        feels_like: number;
-        humidity: number;
-      };
-      weather: [
-        {
-          main: string;
-          description: string;
-        }
-      ];
-      pop: number;
-      wind: {
-        speed: number;
-        deg: number;
-      };
-    }
-  ];
-};
-
-type WeatherCastComponentProps = {
-  cityCoords?: LocationType;
-};
-
-function WeatherCastComponent(props: WeatherCastComponentProps) {
-  const { cityCoords } = props;
-  const [selectedCitySpecifications, setSelectedCitySpecifications] =
-    useState<CitySpecificationsResponse>();
-  const [currentWeatherData, setCurrentWeatherData] =
-    useState<CurrentWeatherDataResponse>();
-  const [fiveDayWeatherData, setFiveDayWeatherData] =
-    useState<FiveDayWeatherDataResponse>();
-
+function WeatherForecastComponent(props: WeatherForecastComponentProps) {
+  const { locationCoords: locationCoords } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    if (!cityCoords) {
-      return;
-    }
-    setIsLoading(true);
-    console.log(cityCoords);
-
-    // Fetch city specifications
-    fetch(
-      `http://api.openweathermap.org/geo/1.0/reverse?lat=${
-        cityCoords.lat
-      }&lon=${cityCoords.lon}&appid=${
-        import.meta.env.VITE_OPEN_WEATHER_API_KEY
-      }`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        /* console.log(data); */
-        setSelectedCitySpecifications(data[0]);
-      })
-      .catch((error) => {
-        console.error("Error fetching city data:", error);
-        setIsError(true);
-      });
-
-    // Fetch current weather data
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${
-        cityCoords.lat
-      }&lon=${cityCoords.lon}&appid=${
-        import.meta.env.VITE_OPEN_WEATHER_API_KEY
-      }`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        /* console.log(data); */
-        setCurrentWeatherData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching current weather data:", error);
-        setIsError(true);
-      });
-
-    // Fetch five day weather data
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${
-        cityCoords.lat
-      }&lon=${cityCoords.lon}&appid=${
-        import.meta.env.VITE_OPEN_WEATHER_API_KEY
-      }`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        /* console.log(data); */
-        setFiveDayWeatherData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching five day weather data:", error);
-        setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false); // Set loading to false when all fetching is done
-      });
-  }, [cityCoords]);
-
   return (
-    <>
-      {cityCoords && !isError && (
-        <div style={{ color: "white" }}>
-          {selectedCitySpecifications && cityCoords ? (
-            <>
-              <h1>CIDADE:</h1>
-              <p>
-                {selectedCitySpecifications.name},
-                {selectedCitySpecifications.country}
-              </p>
-              <p>
-                {cityCoords.lat} {cityCoords.lon}
-              </p>
-            </>
-          ) : (
-            <p>error</p>
-          )}
-          <>
-            {currentWeatherData ? (
-              <>
-                <h1>PREVISÃO ATUAL:</h1>
-                <p>
-                  temp: {currentWeatherData.main.temp} | felt temp:{" "}
-                  {currentWeatherData.main.feels_like} | humidity:{" "}
-                  {currentWeatherData.main.humidity} | weather:{" "}
-                  {currentWeatherData.weather[0].main} | weather desc:{" "}
-                  {currentWeatherData.weather[0].description} | wind speed:{" "}
-                  {currentWeatherData.wind.speed} | wind deg:{" "}
-                  {currentWeatherData.wind.deg} |
-                </p>
-              </>
-            ) : (
-              <p>error</p>
-            )}
-          </>
-          <>
-            {fiveDayWeatherData && fiveDayWeatherData.list ? (
-              <>
-                <h1>PREVISÃO 5 DIAS:</h1>
-                {fiveDayWeatherData.list.map((item) => (
-                  <p key={item.dt_txt}>
-                    date: {item.dt_txt} | temp: {item.main.temp} | felt temp:{" "}
-                    {item.main.feels_like} | humidity: {item.main.humidity} |
-                    weather: {item.weather[0].main} | weather desc:{" "}
-                    {item.weather[0].description} | rain prob: {item.pop} | wind
-                    speed: {item.wind.speed} | wind deg: {item.wind.deg} |
-                  </p>
-                ))}
-              </>
-            ) : (
-              <p>error</p>
-            )}
-          </>
-        </div>
+    <WeatherForecastMainContainer>
+      {locationCoords && !isError && (
+        <>
+          <LocationComponent
+            locationCoords={locationCoords}
+            setLoadingState={setIsLoading}
+            setErrorState={setIsError}
+          />
+          <CurrentWeatherComponent
+            locationCoords={locationCoords}
+            setLoadingState={setIsLoading}
+            setErrorState={setIsError}
+          />
+          <FiveDayForecastComponent
+            locationCoords={locationCoords}
+            setLoadingState={setIsLoading}
+            setErrorState={setIsError}
+          />
+        </>
       )}
-      {isError && (
-        <div style={{ color: "white" }}>
-          <h1>ERRO!</h1>
-          <p>Não foi possível carregar os dados.</p>
-        </div>
-      )}
+      {isError && <ErrorComponent />}
       <LoadingBackdrop loading={isLoading} />
-    </>
+    </WeatherForecastMainContainer>
   );
 }
 
-export default WeatherCastComponent;
+export default WeatherForecastComponent;

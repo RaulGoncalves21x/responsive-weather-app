@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LocationMainContainer = styled.div`
   width: 100vw;
-  height: 30vh;
+  height: 23.5vh;
   display: flex;
   justify-content: center;
   align-items: center;

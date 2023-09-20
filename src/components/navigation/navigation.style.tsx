@@ -19,7 +19,7 @@ export const LogoContainer = styled.div`
     height: 100%;
     aspect-ratio: 1 / 1;
   }
-  
+
   & > span {
     color: #ffffff;
     font-size: 20px;

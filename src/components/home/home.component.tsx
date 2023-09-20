@@ -1,5 +1,5 @@
 import { useState } from "react";
-import WeatherCastComponent from "../forecast/forecast.component";
+import WeatherForecastComponent from "../forecast/forecast.component";
 import SearchLocationComponent from "../search//search.component";
 
 export type LocationType = {
@@ -16,7 +16,7 @@ function HomeComponent() {
   return (
     <>
       <SearchLocationComponent setLocationCoords={setSearchInputValue} />
-      <WeatherCastComponent cityCoords={searchInputValue} />
+      <WeatherForecastComponent locationCoords={searchInputValue} />
     </>
   );
 }
