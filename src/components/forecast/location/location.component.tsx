@@ -1,4 +1,5 @@
 import { LocationSpecification } from "../forecast.component";
+import { Location, LocationDateTime } from "./location.style";
 
 function getTimeFromOffset(offsetInSeconds: number): string {
   const daysOfWeek = [
@@ -22,10 +23,13 @@ function getTimeFromOffset(offsetInSeconds: number): string {
 
   const dayOfWeek = daysOfWeek[localTime.getDay()];
   const month = localTime.toLocaleString("en-US", { month: "long" });
-  const year = localTime.getFullYear();
   const hour = localTime.getUTCHours();
+  const minute =
+    localTime.getUTCMinutes().toString().length === 1
+      ? `0${localTime.getUTCMinutes()}`
+      : localTime.getUTCMinutes();
 
-  return `${dayOfWeek}, ${localTime.getUTCDate()} ${month}, ${year} - ${hour}:${localTime.getUTCMinutes()}`;
+  return `${dayOfWeek}, ${localTime.getUTCDate()} ${month} |  ${hour}:${minute}`;
 }
 
 type LocationComponentProps = {
@@ -39,10 +43,12 @@ function LocationComponent(props: LocationComponentProps) {
     <>
       {location && (
         <>
-          <span>
+          <Location>
             {location.name}, {location.sys.country}
-          </span>
-          <span>{getTimeFromOffset(location.timezone)}</span>
+          </Location>
+          <LocationDateTime>
+            {getTimeFromOffset(location.timezone)}
+          </LocationDateTime>
         </>
       )}
     </>
