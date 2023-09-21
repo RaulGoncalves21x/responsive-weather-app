@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { LocationType } from "../../home/home.component";
+import { LocationSpecification } from "../forecast.component";
 
 type CurrentWeatherDataResponse = {
   main: {
@@ -17,16 +18,30 @@ type CurrentWeatherDataResponse = {
     speed: number;
     deg: number;
   };
+  name: string;
+  sys: {
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
 };
 
 type CurrentWeatherComponentProps = {
   locationCoords: LocationType;
+  setLocationSpecification: (
+    LocationSpecification: LocationSpecification
+  ) => void;
   setLoadingState: (loadingState: boolean) => void;
   setErrorState: (errorState: boolean) => void;
 };
 
 function CurrentWeatherComponent(props: CurrentWeatherComponentProps) {
-  const { locationCoords, setLoadingState, setErrorState } = props;
+  const {
+    locationCoords,
+    setLocationSpecification,
+    setLoadingState,
+    setErrorState,
+  } = props;
   const [currentWeatherData, setCurrentWeatherData] =
     useState<CurrentWeatherDataResponse>();
 
@@ -35,7 +50,7 @@ function CurrentWeatherComponent(props: CurrentWeatherComponentProps) {
       return;
     }
 
-    // Fetch current forecast data
+    // Fetch current forecast data and specified location
     async function fetchCurrentForecastData() {
       setLoadingState(true);
       setErrorState(false);
@@ -54,14 +69,22 @@ function CurrentWeatherComponent(props: CurrentWeatherComponentProps) {
           throw new Error(data.message);
         }
 
-        const data = await response.json();
+        const data: CurrentWeatherDataResponse = await response.json();
         console.log("Current: ", data);
         setCurrentWeatherData(data);
+        setLocationSpecification({
+          name: data.name,
+          sys: {
+            country: data.sys.country,
+            sunrise: data.sys.sunrise,
+            sunset: data.sys.sunset,
+          },
+        });
       } catch (error) {
         console.error("Error fetching current weather data:", error);
         setErrorState(true);
       } finally {
-        setLoadingState(false); // Set loading to false when all fetching is done
+        setLoadingState(false);
       }
     }
 

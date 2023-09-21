@@ -7,12 +7,23 @@ import FiveDayForecastComponent from "./five-day-forecast/five-day-forecast.comp
 import { WeatherForecastMainContainer } from "./forecast.style";
 import ErrorComponent from "./error/error.component";
 
+export type LocationSpecification = {
+  name: string;
+  sys: {
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
+};
+
 type WeatherForecastComponentProps = {
   locationCoords?: LocationType;
 };
 
 function WeatherForecastComponent(props: WeatherForecastComponentProps) {
   const { locationCoords: locationCoords } = props;
+  const [locationSpecification, setLocationSpecification] =
+    useState<LocationSpecification>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -20,15 +31,14 @@ function WeatherForecastComponent(props: WeatherForecastComponentProps) {
     <WeatherForecastMainContainer>
       {locationCoords && !isError && (
         <>
-          <LocationComponent
-            locationCoords={locationCoords}
-            setLoadingState={setIsLoading}
-            setErrorState={setIsError}
-          />
+          {locationSpecification && (
+            <LocationComponent location={locationSpecification} />
+          )}
           <CurrentWeatherComponent
             locationCoords={locationCoords}
             setLoadingState={setIsLoading}
             setErrorState={setIsError}
+            setLocationSpecification={setLocationSpecification}
           />
           <FiveDayForecastComponent
             locationCoords={locationCoords}

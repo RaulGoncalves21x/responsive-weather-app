@@ -69,7 +69,7 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
         console.error("Error fetching five day weather data:", error);
         setErrorState(true);
       } finally {
-        setLoadingState(false); // Set loading to false when all fetching is done
+        setLoadingState(false);
       }
     }
 
