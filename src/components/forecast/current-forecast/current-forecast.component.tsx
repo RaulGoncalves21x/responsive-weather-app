@@ -24,6 +24,7 @@ type CurrentWeatherDataResponse = {
     sunrise: number;
     sunset: number;
   };
+  timezone: number;
 };
 
 type CurrentWeatherComponentProps = {
@@ -79,6 +80,7 @@ function CurrentWeatherComponent(props: CurrentWeatherComponentProps) {
             sunrise: data.sys.sunrise,
             sunset: data.sys.sunset,
           },
+          timezone: data.timezone,
         });
       } catch (error) {
         console.error("Error fetching current weather data:", error);

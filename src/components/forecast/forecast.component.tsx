@@ -11,9 +11,8 @@ export type LocationSpecification = {
   name: string;
   sys: {
     country: string;
-    sunrise: number;
-    sunset: number;
   };
+  timezone: number;
 };
 
 type WeatherForecastComponentProps = {

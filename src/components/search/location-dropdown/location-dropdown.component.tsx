@@ -15,7 +15,7 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
   const { active, setLocationCoords, fetchingSpecifiedCoordsStatus } = props;
 
   const fetchUserLocation = () => {
-    console.log("Clicked on Use Current Location"); // Add this line
+    console.log("Clicked on Use Current Location");
     fetchingSpecifiedCoordsStatus(true);
 
     if (navigator.geolocation) {
