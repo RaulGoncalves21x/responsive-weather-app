@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+# Responsive Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The purpose of this project is to conceive a React application, developed from scratch, using TypeScript. Through its development, I aspire to enrich my knowledge related to the React library and its various concepts, as well as the implementation of external APIs. It is my intention for this application to have a minimalistic and modern interface, while being responsive and adapting appropriately to the various sizes of devices on which it can be accessed.
 
-Currently, two official plugins are available:
+As stated previously, the primary objective of this project is to serve as a means to further refine and bolster my existing skills and knowledge. It is important to clarify that this project is not intended for use within any professional setting; rather, its sole purpose is to contribute to the gradual development of my portfolio.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Current Status
 
-## Expanding the ESLint configuration
+- [x] **Completed:** Structuring the React Application
+- [x] **Completed:** Studying and Testing the API's Operation
+- [x] **Completed:** Implementing the API in the Application by Obtaining and Displaying Data in an Initial State
+- [ ] **In Progress:** Creating the Various Necessary Components, Along with Their Styling
+- [ ] **Planned:** Integrating Functionality to Suggest Locations While Searching
+- [ ] **Planned:** Making the Application and All of Its Components Responsive
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies
 
-- Configure the top-level `parserOptions` property like this:
+- **TypeScript**: A statically typed superset of JavaScript that helps catch errors at compile-time.
+- **Vite**: A fast build tool for JavaScript and TypeScript projects.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Frameworks & Libraries
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React**: A popular JavaScript library for building user interfaces.
+- **Dotenv**: A library for loading environment variables from a .env file.
+- **MUI Material**: A set of UI components for building responsive web applications using Material Design.
+- **Bootstrap**: A CSS framework that simplifies the styling and layout of web pages. It also provides a collection of icons.
+
+### API
+
+- [OpenWeather](https://openweathermap.org/api)
