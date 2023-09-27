@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { LocationType } from "../../home/home.component";
+import {
+  FiveDayComponent,
+  FiveDayForecastWrapper,
+} from "./five-day-forecast.style";
 
 type FiveDayWeatherDataResponse = {
   city: {
@@ -29,14 +33,43 @@ type FiveDayWeatherDataResponse = {
   ];
 };
 
+function returnDay(datetime: string, offsetInSeconds: number): string {
+  const initialDate = new Date(datetime);
+  const offsetMilliseconds = offsetInSeconds * 1000;
+  const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
+
+  const day = localTime.toLocaleString("en-US", { day: "numeric" });
+  const dayOfWeek = localTime.toLocaleDateString("en-US", { weekday: "short" });
+
+  return `${dayOfWeek}, ${day}`;
+}
+
+function returnHour(datetime: string, offsetInSeconds: number): string {
+  const initialDate = new Date(datetime);
+  const offsetMilliseconds = offsetInSeconds * 1000;
+  const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
+
+  const hour =
+    localTime.getUTCHours().toString().length === 1
+      ? `0${localTime.getUTCHours()}`
+      : localTime.getUTCHours();
+  const minute =
+    localTime.getUTCMinutes().toString().length === 1
+      ? `0${localTime.getUTCMinutes()}`
+      : localTime.getUTCMinutes();
+
+  return `${hour}:${minute}`;
+}
+
 type FiveDayForecastComponentProps = {
   locationCoords: LocationType;
   setLoadingState: (loadingState: boolean) => void;
   setErrorState: (errorState: boolean) => void;
+  timezone?: number;
 };
 
 function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
-  const { locationCoords, setLoadingState, setErrorState } = props;
+  const { locationCoords, setLoadingState, setErrorState, timezone } = props;
   const [fiveDayWeatherData, setFiveDayWeatherData] =
     useState<FiveDayWeatherDataResponse>();
 
@@ -53,7 +86,7 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/forecast?lat=${
             locationCoords.lat
-          }&lon=${locationCoords.lon}&appid=${
+          }&lon=${locationCoords.lon}&units=metric&appid=${
             import.meta.env.VITE_OPEN_WEATHER_API_KEY
           }`
         );
@@ -76,52 +109,27 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
     fetchFiveDayForecastData();
   }, [locationCoords]);
 
-  /* useEffect(() => {
-    if (!locationCoords) {
-      return;
-    }
-    setLoadingState(true);
-    setErrorState(false);
-
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${
-        locationCoords.lat
-      }&lon=${locationCoords.lon}&appid=${
-        import.meta.env.VITE_OPEN_WEATHER_API_KEY
-      }`
-    )
-      .then((response) => response.json())
-      .then((data: FiveDayWeatherDataResponse) => {
-        console.log("Five Day: ", data);
-        setFiveDayWeatherData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching five day weather data:", error);
-        setErrorState(true);
-      })
-      .finally(() => {
-        setLoadingState(false); // Set loading to false when all fetching is done
-      });
-  }, [locationCoords]); */
-
   return (
     <>
-      {fiveDayWeatherData && fiveDayWeatherData.list && (
-        <>
-          <h1>PREVISÃO 5 DIAS:</h1>
+      {fiveDayWeatherData && fiveDayWeatherData.list && timezone && (
+        <FiveDayForecastWrapper>
           {fiveDayWeatherData.list.map((item) => (
-            <p key={item.dt_txt}>
-              date: {item.dt_txt} | temp: {item.main.temp} | felt temp:{" "}
-              {item.main.feels_like} | humidity: {item.main.humidity} | weather:{" "}
-              {item.weather[0].main} | weather desc:{" "}
-              {item.weather[0].description} | rain prob: {item.pop} | wind
-              speed: {item.wind.speed} | wind deg: {item.wind.deg} |
-            </p>
+            <FiveDayComponent key={item.dt_txt}>
+              <span className="date">{returnDay(item.dt_txt, timezone)}</span>
+              <span className="hour">{returnHour(item.dt_txt, timezone)}</span>
+              <span className="weather">{item.weather[0].main}</span>
+              <span className="temp">{item.main.temp}</span>
+            </FiveDayComponent>
           ))}
-        </>
+        </FiveDayForecastWrapper>
       )}
     </>
   );
 }
+
+/* humidity: {item.main.humidity} | weather: {item.weather[0].main} |
+weather desc: {item.weather[0].description} | rain prob:{" "}
+{item.pop} | wind speed: {item.wind.speed} | wind deg:{" "}
+{item.wind.deg} | */
 
 export default FiveDayForecastComponent;

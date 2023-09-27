@@ -43,6 +43,7 @@ function WeatherForecastComponent(props: WeatherForecastComponentProps) {
             locationCoords={locationCoords}
             setLoadingState={setIsLoading}
             setErrorState={setIsError}
+            timezone={locationSpecification?.timezone}
           />
         </>
       )}

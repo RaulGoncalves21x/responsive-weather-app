@@ -101,16 +101,39 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
       {currentWeatherData && currentWeatherData.main && (
         <CurrentForecastWrapper>
           <ForecastPrimaryData>
-            <div>weather: {currentWeatherData.weather[0].main}</div>
-            <div>temp: {currentWeatherData.main.temp} </div>
-            <div>weather desc: {currentWeatherData.weather[0].description}</div>
+            <div>
+              <img width={"175px"} src="/src/assets/weather-app.png" />
+            </div>
+            <div>
+              <span>{Math.round(currentWeatherData.main.temp)}&deg;</span>
+              <span>{currentWeatherData.weather[0].description}</span>
+            </div>
           </ForecastPrimaryData>
           <ForecastSecondaryData>
-            <div>humidity: {currentWeatherData.main.humidity}</div>
-            <div>wind speed: {currentWeatherData.wind.speed}</div>
-            <div>wind deg: {currentWeatherData.wind.deg}</div>
-            <div>sunrise: {currentWeatherData.sys.sunrise}</div>
-            <div>sunset: {currentWeatherData.sys.sunset}</div>
+            <div>
+              <span>{currentWeatherData.main.humidity}</span>
+              <span>Humidity</span>
+            </div>
+            <div>
+              <span>{currentWeatherData.wind.speed}</span>
+              <span>Wind</span>
+            </div>
+            <div>
+              <span>{currentWeatherData.sys.sunrise}</span>
+              <span>Sunrise</span>
+            </div>
+            <div>
+              <span>{currentWeatherData.wind.deg}</span>
+              <span>wind deg</span>
+            </div>
+            <div>
+              <span>{currentWeatherData.wind.deg}</span>
+              <span>wind deg</span>
+            </div>
+            <div>
+              <span>{currentWeatherData.sys.sunset}</span>
+              <span>sunset</span>
+            </div>
           </ForecastSecondaryData>
         </CurrentForecastWrapper>
       )}

@@ -23,11 +23,15 @@ function getTimeFromOffset(offsetInSeconds: number): string {
 
   const dayOfWeek = daysOfWeek[localTime.getDay()];
   const month = localTime.toLocaleString("en-US", { month: "long" });
-  const hour = localTime.getUTCHours();
+  const hour =
+    localTime.getUTCHours().toString().length === 1
+      ? `0${localTime.getUTCHours()}`
+      : localTime.getUTCHours();
+
   const minute =
     localTime.getUTCMinutes().toString().length === 1
       ? `0${localTime.getUTCMinutes()}`
-      : localTime.getUTCMinutes();
+      : `${localTime.getUTCMinutes()}`;
 
   return `${dayOfWeek}, ${localTime.getUTCDate()} ${month} |  ${hour}:${minute}`;
 }
