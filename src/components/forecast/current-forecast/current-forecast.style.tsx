@@ -4,13 +4,15 @@ export const CurrentForecastWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 100px;
+  margin-bottom: 75px;
 `;
 
 export const ForecastPrimaryData = styled.div`
   width: 50%;
+  min-width: 360px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -47,7 +49,12 @@ export const ForecastPrimaryData = styled.div`
 
 export const ForecastSecondaryData = styled.div`
   width: 50%;
-  max-width: 1000px;
+  min-width: 360px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
   display: grid;
   grid-template: repeat(2, 1fr) / repeat(3, 1fr);
   grid-gap: 50px 20px;

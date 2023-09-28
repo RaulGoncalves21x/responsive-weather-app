@@ -5,7 +5,7 @@ export const NavigationContainer = styled.div`
   height: 6.5vh;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 15px;
 `;
 
 export const LogoContainer = styled.div`

@@ -4,7 +4,10 @@ import LoadingBackdrop from "../common/loading-backdrop.component";
 import LocationComponent from "./location/location.component";
 import CurrentWeatherComponent from "./current-forecast/current-forecast.component";
 import FiveDayForecastComponent from "./five-day-forecast/five-day-forecast.component";
-import { WeatherForecastMainContainer } from "./forecast.style";
+import {
+  WeatherForecastMainContainer,
+  WeatherForecastWrapper,
+} from "./forecast.style";
 import ErrorComponent from "./error/error.component";
 
 export type LocationSpecification = {
@@ -28,25 +31,27 @@ function WeatherForecastComponent(props: WeatherForecastComponentProps) {
 
   return (
     <WeatherForecastMainContainer>
-      {locationCoords && !isError && (
-        <>
-          {locationSpecification && (
-            <LocationComponent location={locationSpecification} />
-          )}
-          <CurrentWeatherComponent
-            locationCoords={locationCoords}
-            setLoadingState={setIsLoading}
-            setErrorState={setIsError}
-            setLocationSpecification={setLocationSpecification}
-          />
-          <FiveDayForecastComponent
-            locationCoords={locationCoords}
-            setLoadingState={setIsLoading}
-            setErrorState={setIsError}
-            timezone={locationSpecification?.timezone}
-          />
-        </>
-      )}
+      <WeatherForecastWrapper>
+        {locationCoords && !isError && (
+          <>
+            {locationSpecification && (
+              <LocationComponent location={locationSpecification} />
+            )}
+            <CurrentWeatherComponent
+              locationCoords={locationCoords}
+              setLoadingState={setIsLoading}
+              setErrorState={setIsError}
+              setLocationSpecification={setLocationSpecification}
+            />
+            <FiveDayForecastComponent
+              locationCoords={locationCoords}
+              setLoadingState={setIsLoading}
+              setErrorState={setIsError}
+              timezone={locationSpecification?.timezone}
+            />
+          </>
+        )}
+      </WeatherForecastWrapper>
       {isError && <ErrorComponent />}
       <LoadingBackdrop loading={isLoading} />
     </WeatherForecastMainContainer>

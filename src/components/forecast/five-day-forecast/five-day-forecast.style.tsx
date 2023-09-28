@@ -14,7 +14,7 @@ export const FiveDayComponent = styled.div`
   width: 9.5%;
   flex-shrink: 0;
   flex-grow: 0;
-  padding: 20px 40px;
+  padding: 25px 25px;
   background-color: rgba(200, 200, 200, 0.4);
   justify-content: center;
   align-items: center;
@@ -25,10 +25,10 @@ export const FiveDayComponent = styled.div`
   }
 
   & > .hour {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
 
   & > .weather {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
 `;

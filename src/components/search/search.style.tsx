@@ -6,6 +6,7 @@ export const LocationMainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 15px;
 `;
 
 export const LocationInputContainer = styled.div`

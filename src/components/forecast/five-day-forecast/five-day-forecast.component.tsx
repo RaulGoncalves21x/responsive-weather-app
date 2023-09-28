@@ -33,34 +33,6 @@ type FiveDayWeatherDataResponse = {
   ];
 };
 
-function returnDay(datetime: string, offsetInSeconds: number): string {
-  const initialDate = new Date(datetime);
-  const offsetMilliseconds = offsetInSeconds * 1000;
-  const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
-
-  const day = localTime.toLocaleString("en-US", { day: "numeric" });
-  const dayOfWeek = localTime.toLocaleDateString("en-US", { weekday: "short" });
-
-  return `${dayOfWeek}, ${day}`;
-}
-
-function returnHour(datetime: string, offsetInSeconds: number): string {
-  const initialDate = new Date(datetime);
-  const offsetMilliseconds = offsetInSeconds * 1000;
-  const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
-
-  const hour =
-    localTime.getUTCHours().toString().length === 1
-      ? `0${localTime.getUTCHours()}`
-      : localTime.getUTCHours();
-  const minute =
-    localTime.getUTCMinutes().toString().length === 1
-      ? `0${localTime.getUTCMinutes()}`
-      : localTime.getUTCMinutes();
-
-  return `${hour}:${minute}`;
-}
-
 type FiveDayForecastComponentProps = {
   locationCoords: LocationType;
   setLoadingState: (loadingState: boolean) => void;
@@ -72,6 +44,50 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
   const { locationCoords, setLoadingState, setErrorState, timezone } = props;
   const [fiveDayWeatherData, setFiveDayWeatherData] =
     useState<FiveDayWeatherDataResponse>();
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function returnDay(datetime: string, offsetInSeconds: number): string {
+    const initialDate = new Date(datetime);
+    const offsetMilliseconds = offsetInSeconds * 1000;
+    const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
+
+    const day = localTime.toLocaleString("en-US", { day: "numeric" });
+    const dayOfWeek =
+      windowWidth >= 1600
+        ? localTime.toLocaleDateString("en-US", { weekday: "long" })
+        : localTime.toLocaleDateString("en-US", { weekday: "short" });
+
+    return `${dayOfWeek}, ${day}`;
+  }
+
+  function returnHour(datetime: string, offsetInSeconds: number): string {
+    const initialDate = new Date(datetime);
+    const offsetMilliseconds = offsetInSeconds * 1000;
+    const localTime = new Date(initialDate.getTime() + offsetMilliseconds);
+
+    const hour =
+      localTime.getUTCHours().toString().length === 1
+        ? `0${localTime.getUTCHours()}`
+        : localTime.getUTCHours();
+    const minute =
+      localTime.getUTCMinutes().toString().length === 1
+        ? `0${localTime.getUTCMinutes()}`
+        : localTime.getUTCMinutes();
+
+    return `${hour}:${minute}`;
+  }
 
   useEffect(() => {
     if (!locationCoords) {
@@ -118,7 +134,7 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
               <span className="date">{returnDay(item.dt_txt, timezone)}</span>
               <span className="hour">{returnHour(item.dt_txt, timezone)}</span>
               <span className="weather">{item.weather[0].main}</span>
-              <span className="temp">{item.main.temp}</span>
+              <span className="temp">{Math.round(item.main.temp)}&deg;</span>
             </FiveDayComponent>
           ))}
         </FiveDayForecastWrapper>
