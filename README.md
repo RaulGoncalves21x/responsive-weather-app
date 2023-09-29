@@ -10,8 +10,8 @@ As stated previously, the primary objective of this project is to serve as a mea
 - [x] **Completed:** Studying and Testing the API's Operation
 - [x] **Completed:** Implementing the API in the Application by Obtaining and Displaying Data in an Initial State
 - [ ] **In Progress:** Creating the Various Necessary Components, Along with Their Styling
+- [ ] **In Progress:** Making the Application and All of Its Components Responsive
 - [ ] **Planned:** Integrating Functionality to Suggest Locations While Searching
-- [ ] **Planned:** Making the Application and All of Its Components Responsive
 
 ## Technologies
 
