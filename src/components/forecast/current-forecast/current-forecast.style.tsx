@@ -52,7 +52,7 @@ export const ForecastSecondaryData = styled.div`
   min-width: 450px;
 
   @media only screen and (max-width: 970px) {
-    width: 100%;
+    min-width: 100%;
   }
 
   display: grid;

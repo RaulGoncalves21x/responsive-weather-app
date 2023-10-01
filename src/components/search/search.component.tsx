@@ -44,7 +44,7 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: "fsq33jsUCJgNBnyI3RZFM235LR3H9lfWIwt0oRhV0uGlr6U=",
+        Authorization: `${import.meta.env.VITE_FOURSQUARE_PLACES_API_KEY}`,
       },
     };
 

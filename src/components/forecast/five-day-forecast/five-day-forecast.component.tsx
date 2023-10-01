@@ -102,7 +102,10 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/forecast?lat=${
             locationCoords.lat
-          }&lon=${locationCoords.lon}&units=metric&appid=1cc7d4c04f6bc69b24bef580265776bc`
+          }&lon=${locationCoords.lon}&units=metric&appid=${
+            import.meta.env.VITE_OPEN_WEATHER_API_KEY
+          }
+          `
         );
         if (!response.ok) {
           const data = await response.json();
