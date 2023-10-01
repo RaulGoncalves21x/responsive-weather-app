@@ -27,5 +27,5 @@ As stated previously, the primary objective of this project is to serve as a mea
 
 ### API
 
-- [OpenWeather - Weather](https://openweathermap.org/api)
-- [FOURSQUARE - Places](https://location.foursquare.com/developer/reference/places-api-overview)
+- [OpenWeather - Weather API](https://openweathermap.org/api)
+- [FOURSQUARE - Places API](https://location.foursquare.com/developer/reference/places-api-overview)
