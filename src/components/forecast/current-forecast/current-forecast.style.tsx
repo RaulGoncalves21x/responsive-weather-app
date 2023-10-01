@@ -13,6 +13,11 @@ export const CurrentForecastWrapper = styled.div`
 export const ForecastPrimaryData = styled.div`
   width: 50%;
   min-width: 450px;
+
+  @media only screen and (max-width: 970px) {
+    min-width: 100%;
+  }
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,6 +30,7 @@ export const ForecastPrimaryData = styled.div`
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      margin-right: 20px;
     }
 
     &:last-child {

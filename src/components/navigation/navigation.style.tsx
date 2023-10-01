@@ -4,8 +4,11 @@ export const NavigationContainer = styled.div`
   width: 100vw;
   height: 6.5vh;
   display: flex;
-  justify-content: space-between;
   padding: 10px 15px;
+
+  @media only screen and (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 
 export const LogoContainer = styled.div`

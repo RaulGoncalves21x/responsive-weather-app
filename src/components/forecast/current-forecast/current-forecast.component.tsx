@@ -6,6 +6,11 @@ import {
   ForecastPrimaryData,
   ForecastSecondaryData,
 } from "./current-forecast.style";
+import WeatherIconComponent from "../five-day-forecast/weather-icon.component";
+import {
+  getCurrentHourFromOffset,
+  getTimeFromUnixWithOffset,
+} from "../../../utils/helpers";
 
 type CurrentForecastDataResponse = {
   main: {
@@ -31,20 +36,6 @@ type CurrentForecastDataResponse = {
   };
   timezone: number;
 };
-
-function getHourFromUnix(
-  unixTimestamp: number,
-  timezoneOffsetSeconds: number
-): string {
-  const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
-  date.setSeconds(date.getSeconds() + timezoneOffsetSeconds); // Convert to adequate timezone
-
-  // Get individual date and time components
-  const hours = date.getUTCHours();
-  const minutes = date.getMinutes();
-
-  return `${hours}:${minutes}`;
-}
 
 type CurrentForecastComponentProps = {
   locationCoords: LocationType;
@@ -116,7 +107,10 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
         <CurrentForecastWrapper>
           <ForecastPrimaryData>
             <div>
-              <img width={"175px"} src="/src/assets/weather-app.png" />
+              <WeatherIconComponent
+                weather={currentWeatherData.weather[0].main}
+                hour={getCurrentHourFromOffset(currentWeatherData.timezone)}
+              />
             </div>
             <div>
               <span>{Math.round(currentWeatherData.main.temp)}&deg;</span>
@@ -134,7 +128,7 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
             </div>
             <div>
               <span>
-                {getHourFromUnix(
+                {getTimeFromUnixWithOffset(
                   currentWeatherData.sys.sunrise,
                   currentWeatherData.timezone
                 )}
@@ -151,7 +145,7 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
             </div>
             <div>
               <span>
-                {getHourFromUnix(
+                {getTimeFromUnixWithOffset(
                   currentWeatherData.sys.sunset,
                   currentWeatherData.timezone
                 )}

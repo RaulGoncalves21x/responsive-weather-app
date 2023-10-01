@@ -31,5 +31,9 @@ export const FiveDayComponent = styled.div`
 
   & > .weather {
     margin-bottom: 25px;
+
+    & > img {
+      max-width: 35px;
+    }
   }
 `;

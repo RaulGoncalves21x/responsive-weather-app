@@ -44,12 +44,13 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
       method: "GET",
       headers: {
         accept: "application/json",
+        "Accept-Language": "en",
         Authorization: `${import.meta.env.VITE_FOURSQUARE_PLACES_API_KEY}`,
       },
     };
 
     fetch(
-      `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&types=geo&bias=geo`,
+      `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&types=geo&limit=5&bias=geo`,
       options
     )
       .then((response) => response.json())

@@ -4,14 +4,18 @@ import {
   FiveDayComponent,
   FiveDayForecastWrapper,
 } from "./five-day-forecast.style";
+import WeatherIconComponent from "./weather-icon.component";
+import { getHourFromUnixWithOffset } from "../../../utils/helpers";
 
 type FiveDayWeatherDataResponse = {
   city: {
     sunrise: number;
     sunset: number;
+    timezone: number;
   };
   list: [
     {
+      dt: number;
       dt_txt: string;
       main: {
         temp: number;
@@ -134,7 +138,13 @@ function FiveDayForecastComponent(props: FiveDayForecastComponentProps) {
             <FiveDayComponent key={item.dt_txt}>
               <span className="date">{returnDay(item.dt_txt, timezone)}</span>
               <span className="hour">{returnHour(item.dt_txt, timezone)}</span>
-              <span className="weather">{item.weather[0].main}</span>
+              <span className="weather">
+                <WeatherIconComponent
+                  weather={item.weather[0].main}
+                  hour={getHourFromUnixWithOffset(item.dt, timezone)}
+                />
+              </span>
+              {/* <span className="weather-desc">{item.weather[0].description}</span> */}
               <span className="temp">{Math.round(item.main.temp)}&deg;</span>
             </FiveDayComponent>
           ))}
