@@ -27,5 +27,6 @@ As stated previously, the primary objective of this project is to serve as a mea
 
 ### API
 
+- [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)
 - [OpenWeather - Weather API](https://openweathermap.org/api)
 - [FOURSQUARE - Places API](https://location.foursquare.com/developer/reference/places-api-overview)
