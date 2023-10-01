@@ -9,9 +9,9 @@ As stated previously, the primary objective of this project is to serve as a mea
 - [x] **Completed:** Structuring the React Application
 - [x] **Completed:** Studying and Testing the API's Operation
 - [x] **Completed:** Implementing the API in the Application by Obtaining and Displaying Data in an Initial State
-- [ ] **In Progress:** Creating the Various Necessary Components, Along with Their Styling
-- [ ] **In Progress:** Making the Application and All of Its Components Responsive
-- [ ] **In Progress:** Integrating Functionality to Suggest Locations While Searching
+- [X] **Completed:** Creating the Various Necessary Components, Along with Their Styling
+- [X] **Completed:** Making the Application and All of Its Components Responsive
+- [X] **Completed:** Integrating Functionality to Suggest Locations While Searching
 
 ## Technologies
 
