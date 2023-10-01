@@ -6,7 +6,7 @@ import {
   ForecastPrimaryData,
   ForecastSecondaryData,
 } from "./current-forecast.style";
-import WeatherIconComponent from "../five-day-forecast/weather-icon.component";
+import WeatherIconComponent from "../weather-icon.component";
 import {
   getCurrentHourFromOffset,
   getTimeFromUnixWithOffset,

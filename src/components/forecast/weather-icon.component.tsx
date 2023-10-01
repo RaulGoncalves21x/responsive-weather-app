@@ -1,8 +1,8 @@
 const WeatherIcons = {
-  CLOUDS: "/src/assets/weather-icons/clouds.png",
-  RAIN: "/src/assets/weather-icons/rain.png",
-  DAY_CLEAR: "/src/assets/weather-icons/clear.png",
-  NIGHT_CLEAR: "/src/assets/weather-icons/night.png",
+  CLOUDS: "/weather-icons/clouds.png",
+  RAIN: "/weather-icons/rain.png",
+  DAY_CLEAR: "/weather-icons/clear.png",
+  NIGHT_CLEAR: "/weather-icons/night.png",
 };
 
 type WeatherIconProps = {

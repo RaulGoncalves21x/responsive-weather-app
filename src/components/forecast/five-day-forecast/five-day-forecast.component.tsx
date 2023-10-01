@@ -4,7 +4,7 @@ import {
   FiveDayComponent,
   FiveDayForecastWrapper,
 } from "./five-day-forecast.style";
-import WeatherIconComponent from "./weather-icon.component";
+import WeatherIconComponent from "../weather-icon.component";
 import { getHourFromUnixWithOffset } from "../../../utils/helpers";
 
 type FiveDayWeatherDataResponse = {
