@@ -23,11 +23,22 @@ type WeatherForecastComponentProps = {
 };
 
 function WeatherForecastComponent(props: WeatherForecastComponentProps) {
-  const { locationCoords: locationCoords } = props;
+  const { locationCoords } = props;
   const [locationSpecification, setLocationSpecification] =
     useState<LocationSpecification>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  /*   useEffect(() => {
+    if (locationSpecification?.name) {
+      const updateSearchParams = () => {
+        const newSearchParams = new URLSearchParams();
+        newSearchParams.set("locationName", locationSpecification.name);
+        setLocationName(newSearchParams);
+      };
+      updateSearchParams();
+    }
+  }, []); */
 
   return (
     <WeatherForecastMainContainer>

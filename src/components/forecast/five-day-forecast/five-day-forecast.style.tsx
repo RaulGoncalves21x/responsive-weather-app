@@ -12,6 +12,7 @@ export const FiveDayComponent = styled.div`
   display: flex;
   flex-direction: column;
   width: 9.5%;
+  min-width: 115px;
   flex-shrink: 0;
   flex-grow: 0;
   padding: 25px 25px;

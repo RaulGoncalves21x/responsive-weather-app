@@ -51,7 +51,7 @@ export const ForecastSecondaryData = styled.div`
   width: 50%;
   min-width: 360px;
 
-  @media (max-width: 767px) {
+  @media only screen and (max-width: 790px) {
     width: 100%;
   }
 

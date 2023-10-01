@@ -5,11 +5,11 @@ import {
   LocationInputField,
 } from "./search.style.tsx";
 import LocationDropdownComponent from "./location-dropdown/location-dropdown.component.tsx";
-import { LocationType } from "../home/home.component.tsx";
-import LoadingBackdrop from "../common/loading-backdrop.component.tsx";
+/* import { LocationType } from "../home/home.component.tsx";
+ */ import LoadingBackdrop from "../common/loading-backdrop.component.tsx";
 
 type SearchLocationComponentProps = {
-  setLocationCoords: (coords: LocationType) => void;
+  setLocationCoords: (coords: URLSearchParams) => void;
 };
 
 function SearchLocationComponent(props: SearchLocationComponentProps) {

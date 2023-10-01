@@ -1,5 +1,5 @@
-import { LocationType } from "../../home/home.component";
-import {
+/* import { LocationType } from "../../home/home.component";
+ */ import {
   CurrentLocationDropdownOption,
   BaseDropdownOption,
   LocationDropdown,
@@ -8,7 +8,7 @@ import {
 type LocationDropdownComponentProps = {
   active?: boolean;
   fetchingSpecifiedCoordsStatus: (status: boolean) => void;
-  setLocationCoords: (coords: LocationType) => void;
+  setLocationCoords: (coords: URLSearchParams) => void;
 };
 
 function LocationDropdownComponent(props: LocationDropdownComponentProps) {
@@ -23,7 +23,11 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
         (position) => {
           console.log(position);
           const { latitude, longitude } = position.coords;
-          setLocationCoords({ lat: latitude, lon: longitude });
+          const newSearchParams = new URLSearchParams();
+          newSearchParams.set("lat", latitude.toString());
+          newSearchParams.set("lon", longitude.toString());
+          setLocationCoords(newSearchParams);
+
           fetchingSpecifiedCoordsStatus(false);
         },
         (error) => {
@@ -40,19 +44,25 @@ function LocationDropdownComponent(props: LocationDropdownComponentProps) {
       <CurrentLocationDropdownOption onClick={fetchUserLocation}>
         <i className="bi bi-geo-fill"></i>Use Current Location
       </CurrentLocationDropdownOption>
-      {Array.from(Array(5)).map((_, index) => (
+      {/* {Array.from(Array(5)).map((_, index) => (
         <BaseDropdownOption
           key={index}
-          onClick={() =>
-            setLocationCoords({
-              lat: Math.floor(Math.random() * 100),
-              lon: Math.floor(Math.random() * 100),
-            })
-          }
+          onClick={() => {
+            const newSearchParams = new URLSearchParams();
+            newSearchParams.set(
+              "lat",
+              Math.floor(Math.random() * 100).toString()
+            );
+            newSearchParams.set(
+              "lon",
+              Math.floor(Math.random() * 100).toString()
+            );
+            setLocationCoords(newSearchParams);
+          }}
         >
           Random Location
         </BaseDropdownOption>
-      ))}
+      ))} */}
     </LocationDropdown>
   );
 }
