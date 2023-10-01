@@ -32,6 +32,20 @@ type CurrentForecastDataResponse = {
   timezone: number;
 };
 
+function getHourFromUnix(
+  unixTimestamp: number,
+  timezoneOffsetSeconds: number
+): string {
+  const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
+  date.setSeconds(date.getSeconds() + timezoneOffsetSeconds); // Convert to adequate timezone
+
+  // Get individual date and time components
+  const hours = date.getUTCHours();
+  const minutes = date.getMinutes();
+
+  return `${hours}:${minutes}`;
+}
+
 type CurrentForecastComponentProps = {
   locationCoords: LocationType;
   setLocationSpecification: (
@@ -63,9 +77,7 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
 
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${
-            locationCoords.lat
-          }&lon=${locationCoords.lon}&units=metric&appid=1cc7d4c04f6bc69b24bef580265776bc`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${locationCoords.lat}&lon=${locationCoords.lon}&units=metric&appid=1cc7d4c04f6bc69b24bef580265776bc`
         );
 
         if (!response.ok) {
@@ -117,7 +129,12 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
               <span>Wind</span>
             </div>
             <div>
-              <span>{currentWeatherData.sys.sunrise}</span>
+              <span>
+                {getHourFromUnix(
+                  currentWeatherData.sys.sunrise,
+                  currentWeatherData.timezone
+                )}
+              </span>
               <span>Sunrise</span>
             </div>
             <div>
@@ -129,7 +146,12 @@ function CurrentForecastComponent(props: CurrentForecastComponentProps) {
               <span>wind deg</span>
             </div>
             <div>
-              <span>{currentWeatherData.sys.sunset}</span>
+              <span>
+                {getHourFromUnix(
+                  currentWeatherData.sys.sunset,
+                  currentWeatherData.timezone
+                )}
+              </span>
               <span>sunset</span>
             </div>
           </ForecastSecondaryData>

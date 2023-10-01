@@ -12,7 +12,7 @@ export const CurrentForecastWrapper = styled.div`
 
 export const ForecastPrimaryData = styled.div`
   width: 50%;
-  min-width: 360px;
+  min-width: 450px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -49,9 +49,9 @@ export const ForecastPrimaryData = styled.div`
 
 export const ForecastSecondaryData = styled.div`
   width: 50%;
-  min-width: 360px;
+  min-width: 450px;
 
-  @media only screen and (max-width: 790px) {
+  @media only screen and (max-width: 970px) {
     width: 100%;
   }
 

@@ -9,7 +9,7 @@ export const WeatherForecastMainContainer = styled.div`
   align-items: center;
   color: white;
 
-  @media only screen and (max-width: 790px) {
+  @media only screen and (max-width: 767px) {
     padding: 15px 10px;
   }
 `;
