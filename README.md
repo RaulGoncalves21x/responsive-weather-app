@@ -21,6 +21,7 @@ As stated previously, the primary objective of this project is to serve as a mea
 ### Frameworks & Libraries
 
 - **React**: A popular JavaScript library for building user interfaces.
+- **Styled Components**: CSS-in-JS for efficient, modular styling in web development.
 - **Dotenv**: A library for loading environment variables from a .env file.
 - **MUI Material**: A set of UI components for building responsive web applications using Material Design.
 - **Bootstrap**: A CSS framework that simplifies the styling and layout of web pages. It also provides a collection of icons.
