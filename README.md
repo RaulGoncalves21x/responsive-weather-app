@@ -11,7 +11,7 @@ As stated previously, the primary objective of this project is to serve as a mea
 - [x] **Completed:** Implementing the API in the Application by Obtaining and Displaying Data in an Initial State
 - [ ] **In Progress:** Creating the Various Necessary Components, Along with Their Styling
 - [ ] **In Progress:** Making the Application and All of Its Components Responsive
-- [ ] **Planned:** Integrating Functionality to Suggest Locations While Searching
+- [ ] **In Progress:** Integrating Functionality to Suggest Locations While Searching
 
 ## Technologies
 
@@ -28,3 +28,4 @@ As stated previously, the primary objective of this project is to serve as a mea
 ### API
 
 - [OpenWeather](https://openweathermap.org/api)
+- [FOURSQUARE - Places](https://location.foursquare.com/developer/reference/places-api-overview)
