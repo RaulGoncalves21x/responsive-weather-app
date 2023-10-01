@@ -5,8 +5,23 @@ import {
   LocationInputField,
 } from "./search.style.tsx";
 import LocationDropdownComponent from "./location-dropdown/location-dropdown.component.tsx";
-/* import { LocationType } from "../home/home.component.tsx";
- */ import LoadingBackdrop from "../common/loading-backdrop.component.tsx";
+import LoadingBackdrop from "../common/loading-backdrop.component.tsx";
+
+export type LocationsAPIResponse = {
+  results: [
+    {
+      geo: {
+        name: string;
+        cc: string;
+        type: string;
+        center: {
+          latitude: number;
+          longitude: number;
+        };
+      };
+    }
+  ];
+};
 
 type SearchLocationComponentProps = {
   setLocationCoords: (coords: URLSearchParams) => void;
@@ -15,6 +30,7 @@ type SearchLocationComponentProps = {
 function SearchLocationComponent(props: SearchLocationComponentProps) {
   const { setLocationCoords } = props;
   const [searchValue, setSearchValue] = useState("");
+  const [searchResult, setSearchResult] = useState<LocationsAPIResponse>();
   const [isLoading, setIsLoading] = useState(false);
 
   const [shouldRender, setShouldRender] = useState(false);
@@ -22,6 +38,24 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
   const toggleDropdownRender = () => {
     setShouldRender(!shouldRender);
   };
+
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: "fsq33jsUCJgNBnyI3RZFM235LR3H9lfWIwt0oRhV0uGlr6U=",
+      },
+    };
+
+    fetch(
+      `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&types=geo&bias=geo`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => setSearchResult(response))
+      .catch((err) => console.error(err));
+  }, [searchValue]);
 
   useEffect(() => {
     if (shouldRender) {
@@ -61,6 +95,7 @@ function SearchLocationComponent(props: SearchLocationComponentProps) {
               active={showDropdown}
               setLocationCoords={setLocationCoords}
               fetchingSpecifiedCoordsStatus={setIsLoading}
+              searchResult={searchResult}
             />
           )}
         </LocationInputContainer>
