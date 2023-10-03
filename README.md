@@ -1,4 +1,4 @@
-# Responsive Weather App
+# WeatherWise - Responsive Weather App
 
 The purpose of this project is to conceive a React application, developed from scratch, using TypeScript. Through its development, I aspire to enrich my knowledge related to the React library and its various concepts, as well as the implementation of external APIs. It is my intention for this application to have a minimalistic and modern interface, while being responsive and adapting appropriately to the various sizes of devices on which it can be accessed.
 
